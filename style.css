@@ -1,0 +1,152 @@
+:root{
+  /* primary accents */
+  --accent: #7c5cff;
+  --accent-strong: #4b2ff7;
+  --glass: rgba(255,255,255,0.06);
+  --card: rgba(255,255,255,0.08);
+  --text: #f7f7fb;
+  --muted: rgba(247,247,251,0.75);
+  --radius: 14px;
+}
+
+/* dark mode switch will flip these */
+[data-dark="true"]{
+  --glass: rgba(0,0,0,0.48);
+  --card: rgba(0,0,0,0.5);
+  --text: #ebedf8;
+  --muted: rgba(235,237,248,0.7);
+  filter: none;
+}
+
+/* base */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; -webkit-font-smoothing:antialiased}
+body{
+  min-height:100vh;
+  background: #0f1724;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+  overflow:hidden;
+}
+
+/* animated background container */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{
+  position:absolute;border-radius:40%;
+  filter: blur(60px) saturate(120%);
+  opacity:.85;
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0);
+}
+.b1{width:520px;height:520px;left:-12%;top:-8%;background:linear-gradient(135deg,#6a11cb,#2575fc);animation:move1 12s ease-in-out infinite}
+.b2{width:420px;height:420px;right:-8%;top:10%;background:linear-gradient(135deg,#a855f7,#fb7185);animation:move2 16s ease-in-out infinite}
+.b3{width:320px;height:320px;left:20%;bottom:-6%;background:linear-gradient(135deg,#34d399,#06b6d4);animation:move3 14s ease-in-out infinite}
+
+/* soft drifting keyframes */
+@keyframes move1{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(18px) rotate(6deg)}100%{transform:translateY(0) rotate(0)}}
+@keyframes move2{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(-6deg)}100%{transform:translateY(0) rotate(0)}}
+@keyframes move3{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(12px) rotate(4deg)}100%{transform:translateY(0) rotate(0)}}
+
+/* particle canvas covers */
+.particles{position:absolute;inset:0;width:100%;height:100%}
+
+/* app card */
+.app{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:920px;
+  padding:20px;
+  border-radius:18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  box-shadow: 0 20px 60px rgba(2,6,23,0.6);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* header */
+.app-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.brand h1{margin:0;font-size:20px;letter-spacing:0.2px}
+.brand .sub{margin:2px 0 0;font-size:12px;color:var(--muted)}
+
+.controls{display:flex;align-items:center;gap:10px}
+.control{display:flex;align-items:center;background:var(--card);padding:6px;border-radius:10px}
+.toggle input{display:none}
+.toggle .material-icons{font-size:20px}
+
+/* panels */
+.panel{background:var(--glass);padding:14px;border-radius:12px;margin-bottom:12px;display:flex;gap:12px;align-items:center}
+.create-panel{justify-content:space-between;flex-wrap:wrap}
+.create-left{display:flex;flex:1;gap:10px;align-items:center}
+input#taskInput{flex:1;padding:12px;border-radius:12px;border:none;outline:none;background:transparent;color:var(--text);font-size:15px;box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03)}
+select#categorySelect{padding:10px;border-radius:10px;border:none;outline:none;background:transparent;color:var(--text)}
+.btn{background:var(--accent);border:none;color:white;padding:10px 12px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:transform .18s, box-shadow .18s}
+.btn:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(11,9,27,0.45)}
+.btn.subtle{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+
+/* progress */
+.progress-panel{flex-direction:column;gap:10px}
+.progress-info{display:flex;justify-content:space-between;align-items:center}
+.progress-text{font-size:13px;color:var(--muted)}
+.progress-bar{height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));width:0%;transition:width .5s cubic-bezier(.2,.9,.2,1)}
+
+/* list */
+.list-panel{padding:10px 12px}
+#taskList{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.task{
+  display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s, opacity .18s;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+  transform-origin:center left;
+  overflow:hidden;
+}
+
+/* entrance pop + stagger */
+.task.enter{animation:popIn .32s cubic-bezier(.2,.9,.2,1)}
+@keyframes popIn{from{transform:translateY(8px) scale(.995);opacity:0}to{transform:none;opacity:1}}
+
+/* hover floating effect */
+.task:hover{transform:translateY(-6px) scale(1.005);box-shadow:0 20px 60px rgba(2,6,23,0.6)}
+
+/* left column */
+.left{display:flex;align-items:center;gap:12px;min-width:0}
+.check{
+  width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  transition:transform .18s ease, background .18s;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.check .material-icons{font-size:22px;opacity:0.95;transition:transform .24s}
+.info{min-width:0}
+.title{font-weight:600;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;max-width:360px}
+.meta{font-size:12px;color:var(--muted);margin-top:4px}
+.right{display:flex;gap:8px;align-items:center}
+
+/* icon buttons */
+.icon-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;padding:8px;border-radius:10px;transition:transform .12s}
+.icon-btn:hover{transform:scale(1.06);color:var(--text)}
+
+/* completed state */
+.task.completed .title{ text-decoration:line-through; opacity:0.6 }
+.task.completed .check{background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))}
+
+/* edit input */
+.edit-input{padding:10px;border-radius:10px;border:none;outline:none;width:100%;background:rgba(255,255,255,0.02);color:var(--text)}
+
+/* delete swipe animation class */
+.task.removing{transform:translateX(24px) rotate(2deg) scale(.98);opacity:0;transition:transform .28s, opacity .28s}
+
+/* footer */
+.app-footer{margin-top:8px;color:var(--muted);font-size:12px;text-align:center}
+
+/* responsive */
+@media (max-width:720px){
+  .app{padding:12px}
+  .create-right{width:100%;display:flex;justify-content:space-between}
+}
+
+/* subtle accessible focus outlines */
+:focus{outline:2px solid rgba(124,92,255,0.18);outline-offset:2px}

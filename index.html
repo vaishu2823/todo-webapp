@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Premium To-Do — Creative</title>
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Animated background layers -->
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <canvas id="particleCanvas" class="particles"></canvas>
+  </div>
+
+  <main class="app" aria-live="polite">
+    <header class="app-header">
+      <div class="brand">
+        <h1>✨ FocusBoard</h1>
+        <p class="sub">Elegant. Fast. Delightful.</p>
+      </div>
+
+      <div class="controls">
+        <label class="control toggle" title="Toggle dark mode">
+          <input type="checkbox" id="darkToggle" />
+          <span class="material-icons">dark_mode</span>
+        </label>
+      </div>
+    </header>
+
+    <section class="panel create-panel">
+      <div class="create-left">
+        <input id="taskInput" placeholder="Add a new task..." aria-label="New task" />
+        <select id="categorySelect" aria-label="Select category">
+          <option value="General">General</option>
+          <option value="Work">Work</option>
+          <option value="Study">Study</option>
+          <option value="Personal">Personal</option>
+        </select>
+        <button id="addBtn" class="btn" title="Add task"><span class="material-icons">add</span></button>
+      </div>
+
+      <div class="create-right">
+        <label>
+          <span class="muted">Filter</span>
+          <select id="filterCategory" aria-label="Filter category">
+            <option value="All">All</option>
+            <option value="General">General</option>
+            <option value="Work">Work</option>
+            <option value="Study">Study</option>
+            <option value="Personal">Personal</option>
+            <option value="Completed">Completed</option>
+        </select>
+        </label>
+        <button id="clearCompleted" class="btn subtle">Clear Completed</button>
+      </div>
+    </section>
+
+    <section class="panel progress-panel" aria-hidden="false">
+      <div class="progress-info">
+        <div class="progress-text"><strong id="remainingCount">0</strong> of <span id="totalCount">0</span> remaining</div>
+        <div class="progress-percentage" id="progressPct">0%</div>
+      </div>
+      <div class="progress-bar" aria-hidden="false">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </section>
+
+    <section class="panel list-panel" id="listPanel">
+      <ul id="taskList"></ul>
+    </section>
+
+    <footer class="app-footer">
+      <small>Tip: Double-click a task to edit. Press Enter to save. Swipe-delete (click) removes with animation.</small>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
